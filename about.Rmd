@@ -30,17 +30,18 @@ in data analysis, business intelligence, and statistical computing.
 
 ## Education
 
-
-- Information Systems
+- Information Systems at the University of Münster
+- Information Systems at the Vancouver Island University
 
 ## Contact
 
 Feel free to connect with me:
 
-- Email: [your.email@example.com](mailto:foo@example.com)
-- LinkedIn: [Your Profile](https://linkedin.com/in/foo)
-- GitHub: [yourusername](https://github.com/foo)
+- Email: [gerrit.wichern@uni-muenster.de](mailto:gerrit.wichern@uni-muenster.de)
+- LinkedIn: [Gerrit Wichern](https://www.linkedin.com/in/gerrit-wichern-00748b304/)
+- GitHub: [WichernG](https://github.com/WichernG/)
 
 ---
+
 
 [← Back to Home](index.html)
