@@ -9,50 +9,53 @@ Go [here](testerattesting.html) for secret page!
 
 Here are some of my key projects demonstrating various data analysis skills.
 
-### Project 1: Government Data Analysis
+### Project 1: Website Performance & Engagement Analysis
 
-**Objective:** Analyze public datasets to extract business insights
+**Objective:** Analyze website performance data to identify relationships between system metrics and user engagement.
+**Description:** This project investigates 153 days of website data—including performance, engagement, and server load—to uncover trends and correlations that inform optimization strategies. It includes summary statistics, visualizations, correlation analysis, and actionable insights for improving user experience and operational efficiency.
 
 **Key Skills:**
 
-- API data access
-- Data quality assessment
-- Aggregation and summarization
-- Business recommendation development
+- Exploratory data analysis (EDA)
+- Correlation assessment
+- Data visualization
+- Interpretation for business decision-making
 
 [View detailed analysis →](project1.html)
 
 ---
 
-### Project 2: Business Performance Dashboard
+### Project 2: Business Data Cleaning & Operational Insights
 
-**Objective:** Clean and analyze operational data to identify performance 
-patterns
+**Objective:** Import, clean, and analyze business CSV data to detect patterns and data-quality issues.
+**Description:** This project involves cleaning a regional sales dataset, checking data quality, handling missing values, and performing business logic checks. It identifies regional performance differences, low-performing segments, and inconsistencies that could affect decision-making. Aggregations and summaries are used to derive managerial insights.
 
 **Key Skills:**
 
-- CSV data processing
-- Missing data handling
-- Data visualization
-- Executive reporting
+- CSV import and preprocessing
+- Data quality evaluation
+- Business logic analysis
+- Aggregation and reporting
 
 [View detailed analysis →](project2.html)
 
 ---
 
-### Project 3: Statistical Exploration
+### Project 3: Jail Population Forecasting & Market Opportunity Analysis
 
-**Objective:** Explore relationships in real-world datasets
+**Objective:** Analyze long-term jail population data to identify high-growth regions for business expansion.
+**Description:** Using New York State’s county-level jail population dataset (1997–present), this project evaluates long-term population trends to help a corrections service provider identify counties with growing demand. It includes data validation, descriptive analytics, trend exploration, segmentation, and strategic recommendations for market entry and resource allocation. 
 
 **Key Skills:**
 
-- Exploratory data analysis
-- Correlation analysis
-- Professional visualization
-- Insight communication
+- API and open-data processing
+- Trend and segmentation analysis
+- Strategic recommendation development
+- Business intelligence reporting
 
 [View detailed analysis →](project3.html)
 
----
+---  
+
 
 [← Back to Home](index.html)
