@@ -2,31 +2,83 @@
 ---
 title: "Welcome to My Portfolio"
 ---
+# Welcome to My Portfolio
 
-## Hello and Welcome!
+## Information Systems Student • University of Münster  
+### Currently Studying Abroad at Vancouver Island University (VIU), Canada
 
-I'm Gerrit, and this is my portfolio. Here you'll find 
-projects showcasing my skills in:
+---
 
-- Data cleaning and transformation
-- Statistical analysis
-- Data visualization with ggplot2
-- Professional reporting with R Markdown
+## 👋 Hello!
 
-### Featured Projects
+I’m **Gerrit Wichern**, a passionate Information Systems student from the  
+**University of Münster**. I am currently spending a study abroad semester at  
+**Vancouver Island University**, where I am expanding my skills in data analysis,  
+business intelligence, and technology-driven decision-making.
 
-Throughout this portfolio, you'll see analyses covering:
+My interests span across:
 
-- **Government Data Analysis:** Working with real-world public datasets
-- **Business Performance:** Analyzing operational data for insights
-- **Data Visualization:** Creating compelling charts and graphics
+- Data analytics & data-driven decision making  
+- Business intelligence & dashboards  
+- E-Business & digital transformation  
+- Information management  
+- Software engineering fundamentals  
+- Cloud services and modern IT architectures  
 
-### Navigate This Portfolio
+I enjoy transforming complex datasets into meaningful insights and building  
+solutions that combine business understanding with technical capabilities.
 
-Use the menu above to:
+---
 
-- Learn more [about me](about.html)
-- View my [projects](projects.html)
+## ⭐ Skills Overview
+
+### **Technical Skills**
+- R (tidyverse, dplyr, ggplot2) 
+- Python (pandas, numpy, matplotlib) as well as Java 
+- SQL & relational databases  
+- Data visualization & reporting  
+- API data access  
+- Git & GitHub  
+
+### **Business & Analytical Skills**
+- Exploratory data analysis (EDA)  
+- Requirements engineering  
+- Process modeling (BPMN)  
+- Business performance assessment  
+- Presentation & communication  
+- Strategic thinking and BI reporting  
+
+---
+
+## 📘 Featured Project
+
+### **Website Performance & User Engagement Analysis**
+A deep-dive analysis of a 153-day dataset exploring relationships between  
+website performance metrics, server load, and user engagement. Includes  
+statistical analysis, visualizations, and insights for optimizing  
+user experience and system performance.
+
+👉 [View the full project](project1.html)
+
+---
+
+## 📂 Full Project Collection
+
+Interested in more of my work?  
+Browse through all my university and practical data-analysis projects:
+
+👉 **[Go to Projects Page](projects.html)**
+
+---
+
+## ✉️ Get in Touch
+
+If you'd like to connect, discuss projects, or talk about data & tech,  
+feel free to reach out via LinkedIn or email.
+
+👉 **[Learn more about me](About.html)**
+
+*Thanks for visiting my portfolio!*
 
 ---
 
