@@ -1,0 +1,129 @@
+
+---
+title: "Introduction to E-Business Analytics Test1"
+subtitle: "Performance Metrics Report"
+author: "Gerrit Wichern"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Executive Summary
+
+I analyzed a website dataset with 153 days of data, including engagement, performance, and server load. Summary statistics showed missing values in performance and engagement ranging from 56 to 97. Scatter plots and trend lines revealed a positive relationship between engagement and performance. The correlation coefficient is 0.698, indicating a moderate-to-strong relationship. This suggests that improving website performance can help increase user engagement, which is important for business decisions and website optimization.
+
+# Website Performance Analysis 
+
+```{r}
+# Create website performance dataset with business terminology
+webperfo <- data.frame(
+  engagement = airquality$Temp,
+  performance = airquality$Ozone,
+  server_load = airquality$Wind
+)
+```
+
+## Question 1
+
+### a:
+```{r}
+head(webperfo)
+```
+head(...) is useful to quickly preview the structure and column names of the dataset. Printing the entire dataset can be overwhelming, especially when it is large.
+
+
+### b:
+```{r}
+summary(webperfo)
+```
+The variable performance has 37 missing values (NA).
+From the summary, we also see the ranges:
+- engagement: 56 to 97
+- performance: 1 to 168
+- server_load: 1.7 to 20.7
+
+
+### c:
+```{r}
+nrow(webperfo)
+```
+We have 153 rows, which represent 153 days of data. For a business manager, knowing the number of days is important because it indicates how much evidence they have for making decisions about website improvements. A small dataset may limit the reliability of insights.
+
+
+### d:
+```{r}
+max(webperfo$engagement)
+```
+The highest engagement score is 97. Compared to the median of 79, this suggests that daily engagement is generally stable but occasionally reaches higher peaks.
+
+
+### e:
+```{r}
+max(webperfo$performance, na.rm = TRUE)
+```
+max() finds the highest value in a vector. The argument na.rm = TRUE is needed because the performance variable contains missing values. Without it, max() would return NA.
+
+## Question 2
+
+### a:
+
+```{r}
+plot(webperfo$engagement, webperfo$performance)
+```
+
+The scatter plot shows a general positive correlation between engagement and performance. However, without labels or colors, the plot is harder to interpret for a business audience that may not be familiar with raw R scatter plots.
+
+### b:
+```{r}
+plot(x = webperfo$engagement, y = webperfo$performance,
+     main = "User Engagement vs Website Performance",
+     xlab = "Daily User Engagement Score", 
+     ylab = "Website Performance Score")
+```
+The title and axis labels make the chart easier to understand by clearly explaining what each axis represents. This ensures that even a non-technical business audience can quickly see what the plot is showing.
+
+### c:
+```{r}
+plot(x = webperfo$engagement, y = webperfo$performance,
+     main = "User Engagement vs Website Performance",
+     xlab = "Daily User Engagement Score", 
+     ylab = "Website Performance Score",
+     pch = 16, col = "blue")
+```
+With blue, solid points, the positive relationship becomes much clearer: higher website performance scores are generally associated with higher user engagement. From a business perspective, this suggests that maintaining strong website performance can help keep users engaged, which may support revenue growth.
+
+### d:
+```{r}
+plot(x = webperfo$engagement, y = webperfo$performance,
+     main = "User Engagement vs Website Performance",
+     xlab = "Daily User Engagement Score", 
+     ylab = "Website Performance Score",
+     pch = 16, col = "blue"
+     )
+abline(lm(performance ~ engagement, data = webperfo), 
+       col = "red", lwd = 2)
+```
+The red trend line highlights the positive relationship: as user engagement increases, website performance also tends to increase. For business leaders, this indicates that improvements in performance are likely to be matched by increases in user engagement.
+
+## Question 3
+
+### a:
+```{r}
+cor(webperfo$engagement, webperfo$performance, use = "complete.obs")
+```
+The correlation coefficient is 0.698, which indicates a moderate to strong positive relationship between engagement and performance.
+
+### b:
+
+The moderate positive correlation suggests that when user engagement is high, website performance also tends to be high. While correlation does not imply causation, other factors such as external conditions may influence both, assuming a causal effect, an e-business manager should aim to optimize website performance. Improving performance is likely to increase user engagement, which can ultimately support higher revenue.
+
+
+
+

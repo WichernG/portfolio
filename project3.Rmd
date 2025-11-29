@@ -1,0 +1,201 @@
+---
+title: "Open Data Network Business Intelligence Report"
+subtitle: "Data-Driven Management Analysis"
+author:
+    - Gerrit  Wichern
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+## Section 1: Business Problem Definition and Context  
+### Strategic Problem Identification Using Data
+
+#### Problem Statement
+A corrections service provider must decide which county jails represent the strongest opportunity for expanding its facility-support services. Using historical jail population trends from 1997 onward, the company needs to identify counties with consistently rising inmate populations that indicate growing demand for staffing, food services, medical support, and security technologies. The dataset provides long-term, county-level population patterns that allow forecasting and prioritizing high-growth markets.
+
+
+## Section 2: Data Source Assessment
+
+### Data Source Documentation
+This analysis uses the *Jail Population by County (Beginning 1997)* dataset from the New York State Division of Criminal Justice Services (DCJS). The dataset is publicly available via NY Open Data at: https://data.ny.gov/Public-Safety/Jail-Population-By-County-Beginning-1997/nymx-kgkn/about_data, with API access through: https://data.ny.gov/api/v3/views/nymx-kgkn/query.json.  
+DCJS collects these data for regulatory reporting, criminal justice planning, and statewide monitoring of jail capacity and inmate populations. The dataset covers annual jail population counts from 1997 to the present, representing all 64 county jails outside New York City and regional totals that include NYC beginning in 2016. Geographic coverage is statewide, with facility-level granularity. Known limitations include differing NYC counting methods for “State Ready” inmates between 2016–2020, making those years not directly comparable to later counts.
+
+
+
+### Access Method Implementation
+
+#### CSV Download from NY Open Data
+
+The dataset was accessed by downloading the CSV file directly from the NY Open Data portal.  
+From the dataset page, the “Export” option was used to download the full dataset in CSV format.  
+The file was then saved locally in the project directory for reproducible loading within R.
+
+The following code imports the downloaded file into R:
+
+```{r}
+# Load jail population dataset via local CSV download
+jail_data <- read.csv("data/Jail_Population_By_County.csv")
+
+# Preview the first rows
+head(jail_data)
+```
+
+#### Data Quality Assessment
+
+To evaluate suitability for business decision-making, the following checks were performed:
+
+```{r}
+# Basic structure and size
+dim(jail_data)                     # Verify rows > 500 and columns >= 5
+str(jail_data)                     # Inspect variable types
+
+# Data completeness
+colSums(is.na(jail_data))          # Missing values per column
+(colSums(is.na(jail_data)) / nrow(jail_data)) * 100  # Missing % per column
+
+# Cardinality check
+sapply(jail_data, function(x) length(unique(x)))
+```
+Data Quality Summary
+
+The dataset contains well over 500 observations and more than five variables, with multiple numeric fields (e.g., inmate counts) and categorical variables (e.g., county, year). Preliminary completeness checks indicate that missing values fall well within acceptable thresholds, and most columns are over 90% complete, making the dataset usable for trend and segmentation analysis. The data is collected by the New York State Division of Criminal Justice Services, a reliable regulatory agency with standardized reporting requirements. Because it provides long-term, county-level jail population trends, the dataset is suitable for forecasting service demand and guiding market-entry or resource-allocation decisions for corrections-related businesses.
+
+## Section 3: Comprehensive Data Analysis
+
+#### Descriptive Analytics:
+
+```{r}
+#For easier access: rename columns
+colnames(jail_data) <- c(
+"facility_name", "year", "census", "boarded_out", "boarded_in",
+"inhouse_census", "sentenced", "civil", "federal",
+"technical_parole_violators", "state_readies", "other_unsentenced"
+)
+# Load necessary libraries
+library(dplyr)
+
+# Check the structure of the data
+str(jail_data)
+
+# Convert character columns to numeric
+jail_data$census <- as.numeric(gsub(",", "", jail_data$census))
+jail_data$inhouse_census <- as.numeric(gsub(",", "", jail_data$inhouse_census))
+jail_data$sentenced <- as.numeric(gsub(",", "", jail_data$sentenced))
+jail_data$federal <- as.numeric(gsub(",", "", jail_data$federal))
+jail_data$technical_parole_violators <- as.numeric(gsub(",", "", jail_data$technical_parole_violators))
+jail_data$state_readies <- as.numeric(gsub(",", "", jail_data$state_readies))
+jail_data$other_unsentenced <- as.numeric(gsub(",", "", jail_data$other_unsentenced))
+
+# Drop original character columns
+jail_data$Census <- NULL
+jail_data$In.House.Census <- NULL
+jail_data$Sentenced <- NULL
+jail_data$Federal <- NULL
+jail_data$Technical.Parole.Violators <- NULL
+jail_data$State.Readies <- NULL
+jail_data$Other.Unsentenced <- NULL
+
+
+# Calculate total annual jail population
+total_population <- aggregate(jail_data$inhouse_census, by = list(jail_data$year), FUN = sum)
+colnames(total_population) <- c("year", "total_population")
+
+# Calculate average annual population per facility
+avg_facility_population <- jail_data %>%
+  group_by(facility_name) %>%
+  summarise(avg_population = mean(inhouse_census))
+
+# Print results
+print(total_population)
+print(avg_facility_population)
+```
+Aggregate Summaries:
+
+aggregate(): Total annual jail population reveals overall trend.
+group_by() + summarise(): Average population per facility highlights busiest locations.
+
+#### Professional Visual Analytics:
+
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(dplyr)
+
+# Bar chart: Top 5 non-NYC facilities by average population
+top_5_non_nyc_facilities <- jail_data %>%
+  filter(facility_name!= "All NYC Facilities" & facility_name!= "All Non-NYC Facilities") %>%
+  group_by(facility_name) %>%
+  summarise(avg_population = mean(inhouse_census)) %>%
+  arrange(desc(avg_population)) %>%
+  head(5)
+
+ggplot(top_5_non_nyc_facilities, aes(x = facility_name, y = avg_population)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Top 5 Non-NYC Facilities by Average Population", x = "Facility Name", y = "Average Population") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust = 1))
+
+# Line graph: Total annual jail population over time
+ggplot(total_population, aes(x = year, y = total_population)) +
+  geom_line() +
+  labs(title = "Total Annual Jail Population Over Time", x = "Year", y = "Total Population")
+
+# Scatter plot: Relationship between sentenced and unsentenced populations for top 3 non-NYC facilities by average population
+top_3_non_nyc_facilities <- jail_data %>%
+  filter(facility_name!= "All NYC Facilities" & facility_name!= "All Non-NYC Facilities") %>%
+  group_by(facility_name) %>%
+  summarise(avg_sentenced = mean(sentenced), avg_unsentenced = mean(other_unsentenced)) %>%
+  arrange(desc(avg_sentenced)) %>%
+  head(3)
+
+ggplot(top_3_non_nyc_facilities, aes(x = avg_sentenced, y = avg_unsentenced, color = factor(facility_name))) +
+  geom_point() +
+  labs(title = "Relationship Between Sentenced and Unsentenced Populations for Top 3 Non-NYC Facilities", x = "Average Sentenced Population", y = "Average Unsentenced Population") +
+  theme(legend.title = element_blank())
+```
+
+The bar chart shows that Monroe County Jail has the highest average population among non-NYC facilities, followed by Erie County Jail and Nassau County CF. This suggests that these facilities may require more resources and attention due to their large populations.
+
+The line graph indicates a general upward trend in the total annual jail population over time, with some fluctuations. This could be due to various factors such as changes in crime rates, law enforcement policies, or demographic shifts.
+
+The scatter plot reveals a positive correlation between sentenced and unsentenced populations for the top 3 non-NYC facilities. Monroe County Jail has the highest average sentenced population, while also having a relatively high average unsentenced population. This might suggest that this facility is dealing with a significant number of both sentenced and unsentenced individuals, potentially indicating a need for increased resources and support.
+
+
+#### Pattern Recognition: 
+
+Two distinct insights:
+
+- Regional Variations: NYC facilities have lower average populations (6905.89) compared to non-NYC facilities (14562.5).
+
+- Time Trend: Total annual jail population decreased by 34.6% from 2019 (32644) to 2020 (20930).
+
+Supported by numerical evidence and charts, these insights highlight significant geographic differences and a notable decline in jail population over time.
+
+
+
+
+## Section 4: Strategic Recommendations
+
+#### Key Findings Summary:
+
+Our analysis revealed three critical insights to inform strategic decisions:
+
+Targeted Expansion: Focus on non-NYC facilities, which have higher average populations (14562.5), to maximize expansion opportunities.
+
+Population Trends: The 34.6% decline in total annual jail population from 2019 to 2020 indicates a potential shift in market demand, requiring adaptive strategies.
+
+Regional Prioritization: NYC facilities have lower average populations (6905.89), suggesting a lower priority for expansion efforts in this region.
+
+These findings enable data-driven decision-making, supporting targeted expansion, adaptation to changing population trends, and optimized resource allocation. By leveraging these insights, the organization can effectively address its original business problem and drive strategic growth.
+
+
+
+
