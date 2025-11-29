@@ -76,10 +76,11 @@ Browse through all my university and practical data-analysis projects:
 If you'd like to connect, discuss projects, or talk about data & tech,  
 feel free to reach out via LinkedIn or email.
 
-👉 **[Learn more about me](About.html)**
+👉 **[Learn more about me](about.html)**
 
 *Thanks for visiting my portfolio!*
 
 ---
 
 *This portfolio was built using R Markdown and is hosted on GitHub Pages.*
+
