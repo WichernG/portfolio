@@ -2,7 +2,6 @@
 ---
 title: "Welcome to My Portfolio"
 ---
-# Welcome to My Portfolio
 
 ## Information Systems Student • University of Münster  
 ### Currently Studying Abroad at Vancouver Island University (VIU), Canada
@@ -83,4 +82,5 @@ feel free to reach out via LinkedIn or email.
 ---
 
 *This portfolio was built using R Markdown and is hosted on GitHub Pages.*
+
 
